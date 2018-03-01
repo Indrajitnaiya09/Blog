@@ -1,0 +1,133 @@
+  <div class="row">
+
+  	<!-- Post Content Column -->
+  	<div class="col-lg-8">
+
+  		<!-- Title -->
+  		<h1 class="mt-4"><%= @article.title %></h1>
+  		<!-- Author -->
+  		<p class="lead">
+  			in 
+  			<%= link_to @article.category.name, @article.category %>
+  		</p>
+  		<hr>
+  		<!-- Date/Time -->
+  		<p>Posted on <%= @article.publish_date.strftime("%B %d %Y %H:%M %p")%></p>
+  		<hr>
+  		<!-- Preview Image -->
+  		<%= image_tag(@article.feature_image_url, size: "900x300", class: "img-fluid rounded") %>
+  		<hr>
+  		<!-- Post Content -->
+  		<p> <%= raw(@article.body) %></p>
+  		<hr>
+  		<!-- Single Comment -->
+  		<% @article.reviews.each do |review| %> 
+  		<div class="media mb-4">
+  			<img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+  			<div class="media-body">
+  				<h5 class="mt-0"><%= review.user.try(:email) %></h5>
+  				<%= review.body %>
+  				<%= review.rating %>
+  			</div>
+  		</div>
+  		<% end %>
+  		<!-- Comments Form -->
+  		<div class="card my-4">
+  			<h5 class="card-header">Leave a Comment:</h5>
+  			<div class="card-body">
+
+  				<%= form_for @review do |f| %>
+
+  				<%= f.hidden_field :article_id , value: @article.id %><br/>
+  				<div class="form-group">
+  					<%= f.text_area :body, class: "form-control" %>
+  				</div>
+
+  				<label for ="review_rating"> Rating :</label>
+  				<%= f.radio_button :rating,1%>1
+  				<%= f.radio_button :rating,2%>2
+  				<%= f.radio_button :rating,3%>3
+  				<%= f.radio_button :rating,4%>4
+  				<%= f.radio_button :rating,5%>5 <br/>
+  				<%= f.submit "Add Comment", class: "btn btn-primary" %>
+  				<%end%>
+
+
+  			</div>
+  		</div>
+
+
+
+  	</div>
+
+  	<!-- Sidebar Widgets Column -->
+  	<div class="col-md-4">
+
+  		<!-- Search Widget -->
+  		<div class="card my-4">
+  			<h5 class="card-header">Search</h5>
+  			<div class="card-body">
+  				<div class="input-group">
+  					<input type="text" class="form-control" placeholder="Search for...">
+  					<span class="input-group-btn">
+  						<button class="btn btn-secondary" type="button">Go!</button>
+  					</span>
+  				</div>
+  			</div>
+  		</div>
+
+  		<!-- Categories Widget -->
+  		<div class="card my-4">
+  			<h5 class="card-header">Categories</h5>
+  			<div class="card-body">
+  				<div class="row">
+  					<div class="col-lg-6">
+  						<ul class="list-unstyled mb-0">
+  							<li>
+  								<a href="#">Web Design</a>
+  							</li>
+  							<li>
+  								<a href="#">HTML</a>
+  							</li>
+  							<li>
+  								<a href="#">Freebies</a>
+  							</li>
+  						</ul>
+  					</div>
+  					<div class="col-lg-6">
+  						<ul class="list-unstyled mb-0">
+  							<li>
+  								<a href="#">JavaScript</a>
+  							</li>
+  							<li>
+  								<a href="#">CSS</a>
+  							</li>
+  							<li>
+  								<a href="#">Tutorials</a>
+  							</li>
+  						</ul>
+  					</div>
+  				</div>
+  			</div>
+  		</div>
+
+  		<!-- Side Widget -->
+  		<div class="card my-4">
+  			<h5 class="card-header">Side Widget</h5>
+  			<div class="card-body">
+  				You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+  			</div>
+  		</div>
+
+  	</div>
+
+  </div>
+  <!-- /.row -->
+
+
+  <%= link_to "Add Review",  new_review_path %> <br/> 
+
+  <%= link_to "Edit", edit_article_path(@article) %> |
+  <%= link_to "Destroy",article_path(@article), method: :delete, data:{confirm: "Are you Sure?"}%> |
+  <%= link_to "ALL ", articles_path %>
+

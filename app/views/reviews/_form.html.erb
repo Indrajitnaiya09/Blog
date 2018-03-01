@@ -1,0 +1,32 @@
+<%= form_for @review do |f|%>
+
+<%if @review.errors.any?%>
+<h3>These  Errors prohibited review form</h3>
+
+<ul>
+		<%@review.errors.full_messages.each do |msg|%>
+		<li>
+			<%= msg %>
+		</li>
+		<%end%>
+</ul>
+<%end%>
+
+
+
+<label for= "review_article_id" >  Article Title :</label>
+<%= @review.article.title%>
+
+
+<%= f.hidden_field :article_id, value: @review.article_id %><br/>
+
+<label for = "review_body"> Write a Review: </label><br/>
+<%= f.text_area :body %><br/>
+<label for ="review_rating"> Rating :</label>
+<%= f.radio_button :rating,1%>1
+<%= f.radio_button :rating,2%>2
+<%= f.radio_button :rating,3%>3
+<%= f.radio_button :rating,4%>4
+<%= f.radio_button :rating,5%>5 <br/>
+<%= f.submit%>
+<%end%>

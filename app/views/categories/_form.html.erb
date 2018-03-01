@@ -1,0 +1,22 @@
+
+<%=form_for @category do |f|%>
+	<%if @category.errors.any?%>
+	<h3>These errors prohibited the form </h3>
+	<ul>
+		<%@category.errors.full_messages.each do |msg|%>
+		<li><%=msg%></li>
+		<%end%>
+	</ul>
+	<%end%>
+
+	<label for= "category_name"> name : </label><br/>
+	<%= f.text_field :name %> <br/>
+	
+    <label for= "category_description "> description  : </label><br/>
+	<%= f.text_area :description%> <br/>
+
+
+	<%= f.submit %>
+
+
+<%end%>

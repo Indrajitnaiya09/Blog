@@ -1,0 +1,11 @@
+
+<h2> Article Title : <%= link_to @review.article.title, article_path(@review.article_id) %> </h2> <br/>
+<h3><%=@review.body%> - <%=@review.rating%></h3>
+<h4>Other review for this Article</h4>
+<ol>
+<%@review.article.reviews.each do |review|%>
+<li>
+   	<%=review.body%> - (<%= review.rating%>)
+</li>
+<%end%>
+</ol>

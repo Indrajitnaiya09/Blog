@@ -1,0 +1,10 @@
+<ol>
+<% @reviews.each do |review| %>
+	<li>
+		<%=  review.body %>
+	</li>
+<%end%>
+</ol>
+
+
+<%= link_to "Add review ", new_review_path %>

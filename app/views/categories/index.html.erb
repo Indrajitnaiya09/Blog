@@ -1,0 +1,21 @@
+<p><%if @categories.empty?%></p>
+<p>NO CATEGORIES FOUND</p>
+<%else%>
+<p> LISTING CATEGORIES <%= (@categories.length)%></p>
+
+<ol>
+		<%@categories.each do |category|%>
+		<li>
+		
+			<%= link_to category.name, category_path(category.id)%> - 
+			<%= category.description%>  - 
+			(<%= category.articles.length%> article)
+			
+		</li>
+		<%end%>
+
+</ol>
+
+
+<%end%>
+<%= link_to "Add category" , new_category_path%>

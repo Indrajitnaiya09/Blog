@@ -1,4 +1,4 @@
-<%=form_for @article do |f|%>
+<%=form_for @article , :html => {:class => "form", :id => "articleForm"} do |f|%>
 	<%if @article.errors.any?%>
 	<h3>These errors prohibited the form </h3>
 	<ul>
@@ -7,25 +7,137 @@
 		<%end%>
 	</ul>
 	<%end%>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="field">
+						<label for= "article_category_id" , class="form-group"> Category </label>
+						<%= f.collection_select :category_id, Category.all, :id, :name, {prompt: "Select Category"}, {class:"form-control selectpicker"} %><span id="categoryError"></span>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="field">
+						<label for= "article_title", class="form-group"> Title  </label>
+						<%= f.text_field :title, class:"form-control" %><span id="titleError"></span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="field">
+					    <label for= "article_publish_date ", class="form-group"> Published date   </label>
+						<%= f.date_field :publish_date, order: [:day, :month, :year], class:"form-control" %><span id="dateError"></span>
+					</div>
+				</div>
+			</div><br/>
+			<div class="row">
+				<div class="col-md-6">
+						<div class="custom-file">
+						   <label for= "feature_image_url ", class="custom-file-label" > Image</label>
+						   <%= f.file_field :feature_image_url,class:"custom-file-input"  %><span id="imageError"></span>
+						</div>
+				</div>
+				<div class="col-md-6">
+					<div class="actions">
+						<%= f.submit "Save", class:"btn btn-lg btn-primary btn-block", id:"articlesubmit" %>
+					</div>
+				</div>
 
-
-	<label for= "article_category_id"> Category :</label><br/>
-	<%= f.collection_select :category_id, Category.all, :id, :name, prompt: "Select Category" %><br/>
-
-	<label for= "article_title"> Title : </label><br/>
-	<%= f.text_field :title %> <br/>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="field">
+			    <label for= "article_body ", class="form-group"> Body  </label>
+				<%= f.text_area :body, class:"form-control" %><span id="bodyError"></span>
+			</div>
+		</div>
+	</div>
+		
 	
-    <label for= "article_body "> Body  : </label><br/>
-	<%= f.text_area :body%> <br/>
-
-   <label for= "feature_image_url "> Image : </label><br/>
-   <%= f.file_field :feature_image_url%> <br/>
-
-  
-    <label for= "article_publish_date "> Published date  : </label><br/>
-	<%= f.date_field :publish_date, order: [:day, :month, :year]%><br/>
-
-	<%=f.submit %>
 
 	
 <%end%>
+
+<script>
+  var formHandle = document.getElementById('articleForm');
+  var categoryHandle = document.getElementById('article_category_id');
+  var titleHandle = document.getElementById('article_title');
+  var articleFormHandle = document.getElementById('articleForm');
+  var bodyHandle = document.getElementById('article_body');
+  var dateHandle = document.getElementById('article_publish_date');
+  var imageHandle = document.getElementById('article_feature_image_url');
+  var submitHandle = document.getElementById('articlesubmit');
+
+  var categoryErrorHandle = document.getElementById('categoryError');
+  var titleErrorHandle = document.getElementById('titleError');
+  var bodyErrorHandle = document.getElementById('bodyError');
+  var imageErrorHandle = document.getElementById('imageError');
+  var dateErrorHandle = document.getElementById('dateError');
+
+  var validator = {
+    categoryValid: false,
+    titleValid: false,
+    bodyValid: false,
+    imageValid: false,
+    dateValid: false
+  }
+
+  function categoryValidation(){
+    if (categoryHandle.value === ""){
+      categoryErrorHandle.innerHTML = "Can't be blank";
+    }else{
+      categoryErrorHandle.innerHTML = "";
+    }
+  }
+
+  function titleValidation(){
+    if (titleHandle.value === ""){
+      titleErrorHandle.innerHTML = "Can't be blank";
+    }else{
+      titleErrorHandle.innerHTML = "";
+    }
+  }
+
+  function bodyValidation(){
+    if (bodyHandle.value === ""){
+      bodyErrorHandle.innerHTML = "Can't be blank";
+    }else{
+      bodyErrorHandle.innerHTML = "";
+    }
+  }
+
+  function imageValidation(){
+    if (imageHandle.value === ""){
+      imageErrorHandle.innerHTML = "Can't be blank";
+    }else{
+      imageErrorHandle.innerHTML = "";
+    }
+  }
+
+  function dateValidation(){
+    if(dateHandle.value === ""){
+      dateErrorHandle.innerHTML = "Can't be blank";
+    }else{
+      dateErrorHandle.innerHTML = "";
+    }
+  }
+
+  formHandle.addEventListener('submit',function(e){
+    console.log("hello");
+    categoryValidation();
+    titleValidation();
+    bodyValidation();
+    imageValidation();
+    dateValidation();
+    if(Object.values(validator).includes(false)){
+      e.preventDefault();
+      setTimeout(function(){
+        submitHandle.disabled = false;
+      },100);
+    }else{
+
+    }
+  },false);
+
+</script>

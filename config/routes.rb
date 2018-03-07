@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :roles
+  resources :genders
   devise_for :users
 	
   	resources :articles

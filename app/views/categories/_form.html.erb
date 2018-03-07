@@ -1,5 +1,5 @@
 
-<%=form_for @category do |f|%>
+<%=form_for @category , :html => {:class => "form", :id => "category_form"} do |f|%>
 	<%if @category.errors.any?%>
 	<h3>These errors prohibited the form </h3>
 	<ul>
@@ -8,15 +8,80 @@
 		<%end%>
 	</ul>
 	<%end%>
-
-	<label for= "category_name"> name : </label><br/>
-	<%= f.text_field :name %> <br/>
-	
-    <label for= "category_description "> description  : </label><br/>
-	<%= f.text_area :description%> <br/>
-
-
-	<%= f.submit %>
-
-
+	<div class="row">
+		<div class="col-md-3">
+			<div class="field">
+				
+				<%= f.text_field :name , class:"form-control", placeholder:"name" %> <span id="nameError"></span>
+			</div><br/>
+			<div class="field"> 
+				<%= f.text_area :description, class:"form-control", placeholder:"description" %> <span id="descriptionError"></span>
+			</div><br/>
+			<div class="actions">
+				<%= f.submit "Save", class:"btn btn-lg btn-primary btn-block", id:"addcategory" %>
+			</div><br/>
+		</div>
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-8">
+			<p><%if @categories.empty?%></p>
+				<p>NO CATEGORIES FOUND</p>
+			<%else%>
+				<p> LISTING ALL EXITING CATEGORIES( <%= @categories.length %> )</p>
+				<ol>
+					<%@categories.each do |category|%>
+						<li>
+							<%= link_to category.name, category_path(category.id)%>
+						</li>
+					<%end%>
+				</ol>
+			<% end %>
+		</div>
+	</div>
 <%end%>
+
+<script>
+  var formHandle = document.getElementById('category_form');
+  var nameHandle = document.getElementById('category_name');
+  var descriptionHandle = document.getElementById('category_description');
+  var addHandle = document.getElementById('addcategory');
+
+  var nameErrorHandle = document.getElementById('nameError');
+  var descriptionErrorHandle = document.getElementById('descriptionError');
+
+  var validator = {
+    nameValid: false,
+    descriptionValid: false
+  }
+
+  function nameValidation(){
+    if (nameHandle.value === ""){
+      nameErrorHandle.innerHTML = "Can't be blank";
+    }else{
+      nameErrorHandle.innerHTML = "";
+    }
+  }
+
+  function descriptionValidation(){
+    if(descriptionHandle.value === ""){
+      descriptionErrorHandle.innerHTML = "Can't be blank";
+    }else{
+      descriptionErrorHandle.innerHTML = "";
+    }
+  }
+
+  formHandle.addEventListener('submit',function(e){
+    console.log("hello");
+    nameValidation();
+    descriptionValidation();
+    if(Object.values(validator).includes(false)){
+      e.preventDefault();
+      setTimeout(function(){
+        addHandle.disabled = false;
+      },100);
+    }else{
+
+    }
+  },false);
+
+</script>

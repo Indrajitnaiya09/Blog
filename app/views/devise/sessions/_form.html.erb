@@ -1,0 +1,75 @@
+
+<div class="wrapper">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => {:class => "form-signin", :id => "login"}) do |f| %>
+
+    <h2 class="form-signin-heading">Please login</h2>
+    <div class="field">
+      <%= f.email_field :email, autofocus: true, class: "form-control", placeholder:"email", id:"loginEmail" %>
+      <span id="emailError1"></span>
+    </div>
+
+    <div class="field">
+      <%= f.password_field :password, autocomplete: "off", class: "form-control", placeholder:"password", id:"loginPassword"  %>
+      <span id="passwordError1"></span>
+    </div>
+
+    <% if devise_mapping.rememberable? -%>
+      <div class="field">
+        <%= f.check_box :remember_me %>
+        <%= f.label :remember_me %>
+      </div>
+    <% end -%>
+
+    <div class="actions">
+      <%= f.submit "Log in", class:"btn btn-lg btn-primary btn-block", id:"submit" %>
+    </div>
+  <% end %>
+</div>
+
+<%#= render "devise/shared/links" %>
+
+<!--<script>
+  var formHandle = document.getElementById('login');
+  var emailHandle = document.getElementById('loginEmail');
+  var passwordHandle = document.getElementById('loginPassword');
+  var loginHandle = document.getElementById('submit');
+
+  var emailErrorHandle = document.getElementById('emailError1');
+  var passwordErrorHandle = document.getElementById('passwordError1');
+
+  var validator = {
+    emailValid: false,
+    passwordValid: false
+  }
+
+  function emailValidation(){
+    if (emailHandle.value === ""){
+      emailErrorHandle.innerHTML = "Can't be blank";
+    }else{
+      emailErrorHandle.innerHTML = "";
+    }
+  }
+
+  function passwordValidation(){
+    if(passwordHandle.value === ""){
+      passwordErrorHandle.innerHTML = "Can't be blank";
+    }else{
+      passwordErrorHandle.innerHTML = "";
+    }
+  }
+
+  formHandle.addEventListener('submit',function(e){
+    console.log("hello");
+    emailValidation();
+    passwordValidation();
+    if(Object.values(validator).includes(false)){
+      e.preventDefault();
+      setTimeout(function(){
+        loginHandle.disabled = false;
+      },100);
+    }else{
+
+    }
+  },false);
+
+</script>-->

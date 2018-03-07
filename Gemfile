@@ -11,6 +11,8 @@ gem 'rails', '~> 5.1.4'
 gem 'carrierwave', '>= 1.0.0.rc'
 gem  'friendly_id', '~> 5.2'
 gem 'devise'
+gem 'cancancan'
+gem 'pry'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3',group: :development
 gem 'pg' , group: :production

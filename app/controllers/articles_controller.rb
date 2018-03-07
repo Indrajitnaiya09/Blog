@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
     before_action :set_article, only: [:show, :edit, :update, :destroy]
-
+    before_action :authenticate_user!, except: [:index, :show]
+    load_and_authorize_resource
 
 	def index
 		@articles = Article.all
@@ -10,6 +11,7 @@ class ArticlesController < ApplicationController
 	end
 	def create
 		@article = Article.new(article_params)
+		@article.user_id = current_user.id
 		if @article.publish_date <= Date.today
 			@article.is_published = true
 		else

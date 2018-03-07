@@ -1,4 +1,6 @@
 class CategoriesController < ApplicationController
+	before_action :authenticate_user!, except: [:index, :show]
+	load_and_authorize_resource
 
 	def index
 		@categories = Category.all
@@ -6,6 +8,7 @@ class CategoriesController < ApplicationController
 
 	def new
 		@category = Category.new
+		@categories = Category.all
 	end
 	def create
 		@category = Category.new(params[:category].permit(:name,:description))
@@ -23,13 +26,13 @@ class CategoriesController < ApplicationController
 
 	def edit
 		@category = Category.find(params[:id])
-
+		@categories = Category.all
 	end
 
 	def update
 		@category = Category.find(params[:id])
 		if @category.update_attributes (params[:category].permit(:name,:description))
-			redirect_to categories_path(@category.id)
+			redirect_to categories_path
 		else
 			render action: "edit"
 		end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171219195512) do
+ActiveRecord::Schema.define(version: 20180304130012) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20171219195512) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
+    t.integer "user_id"
     t.index ["slug"], name: "index_articles_on_slug", unique: true
   end
 
@@ -44,12 +45,32 @@ ActiveRecord::Schema.define(version: 20171219195512) do
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
+  create_table "genders", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "permissions", force: :cascade do |t|
+    t.integer "role_id"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "reviews", force: :cascade do |t|
     t.text "body"
     t.integer "article_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "rating"
+    t.integer "user_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -65,6 +86,10 @@ ActiveRecord::Schema.define(version: 20171219195512) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "username"
+    t.string "dob"
+    t.integer "gender_id"
+    t.string "mobile"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
